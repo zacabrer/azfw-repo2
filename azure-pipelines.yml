@@ -1,0 +1,27 @@
+# Starter pipeline
+# Start with a minimal pipeline that you can customize to build and deploy your code.
+# Add steps that build, run tests, deploy, and more:
+# https://aka.ms/yaml
+
+trigger:
+- main
+
+pool:
+  vmImage: ubuntu-latest
+
+steps:
+- script: echo Hello, world!
+  displayName: 'Run a one-line script'
+
+- script: |
+- task: AzureResourceManagerTemplateDeployment@3
+  inputs:
+    deploymentScope: 'Resource Group'
+    azureResourceManagerConnection: 'zcsub-AzureARM'
+    subscriptionId: '3ed4f01f-6e27-4724-93bf-e1001f78a63f'
+    action: 'Create Or Update Resource Group'
+    resourceGroupName: 'IPGroup-Repro2'
+    location: 'West US'
+    templateLocation: 'URL of the file'
+    csmFileLink: 'https://raw.githubusercontent.com/zacabrer/azfw-repo2/main/first.json'
+    deploymentMode: 'Incremental'
